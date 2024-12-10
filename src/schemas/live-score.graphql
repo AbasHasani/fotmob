@@ -1,0 +1,70 @@
+type Query {
+  liveScore(date: String!): [LiveScore]
+  liveScoreLives: LiveScore
+}
+
+type LiveScore {
+  competition: Competition!
+  matches: [Match!]!
+}
+
+type Competition {
+  id: ID!
+  name: String!
+  area: Area!
+  image: Image!
+}
+
+type Area {
+  name: String!
+}
+
+type Image {
+  url: String!
+}
+
+type Match {
+  id: ID!
+  startDate: DateTime
+  venue: Area!
+  lastUpdated: DateTime
+  period: Period
+  round: Round!
+  status: String
+  teamA: Team
+  teamB: Team
+  redCards: RedCards
+  score: RedCards
+  agg: String
+  penalty: String
+  tvChannel: String
+  bettingOddsDetailsList: [String!]!
+}
+
+type Period {
+  type: String!
+  minute: Int!
+  extra: Int!
+}
+
+type RedCards {
+  teamA: Int!
+  teamB: Int!
+}
+
+type Round {
+  name: String!
+  display: Boolean!
+}
+
+type Team {
+  id: ID!
+  code: String!
+  short: String!
+  long: String!
+  full: String!
+  name: String!
+  image: Image!
+}
+
+scalar DateTime

@@ -4,36 +4,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("@apollo/server");
-const standalone_1 = require("@apollo/server/standalone");
+const express4_1 = require("@apollo/server/express4");
 const express_1 = __importDefault(require("express"));
-const http_1 = __importDefault(require("http"));
+const cors_1 = __importDefault(require("cors"));
+const body_parser_1 = __importDefault(require("body-parser"));
+// Type defs
+const schemas_1 = require("./schemas");
+// Resolvers
 const resolvers_1 = require("./resolvers");
-const graphql_tag_1 = __importDefault(require("graphql-tag"));
-const fs_1 = require("fs");
-const path_1 = require("path");
-const app = (0, express_1.default)();
-const httpServer = http_1.default.createServer(app);
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-const typeDefs = (0, graphql_tag_1.default)((0, fs_1.readFileSync)((0, path_1.resolve)(__dirname, "./schema.graphql"), {
-    encoding: "utf-8",
-}));
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
+// Routes
+const match_1 = __importDefault(require("./routes/match"));
+const live_score_1 = __importDefault(require("./routes/live-score"));
+const team_1 = __importDefault(require("./routes/team"));
+const player_1 = __importDefault(require("./routes/player"));
+const news_1 = __importDefault(require("./routes/news"));
+const goal_1 = require("./api/goal");
 const server = new server_1.ApolloServer({
-    typeDefs,
+    typeDefs: schemas_1.typeDefs,
     resolvers: resolvers_1.resolvers,
-    introspection: true
 });
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
+const app = (0, express_1.default)();
 const runServer = async () => {
-    const { url } = await (0, standalone_1.startStandaloneServer)(server, {
-        listen: { port: Number(process.env.PORT) || 5000 },
+    // const { url } = await startStandaloneServer(server, {
+    //   context: async () => {
+    //     const { cache } = server;
+    //     return {
+    //       dataSources: {
+    //         moviesAPI: new MoviesAPI({ cache }),
+    //       },
+    //     };
+    //   },
+    //   listen: { port: Number(process.env.PORT) || 5000 },
+    // });
+    // console.log(`🚀  Server ready at1: ${url}`);
+    await server.start();
+    // Attach Apollo Server to a specific route
+    app.use("/graphql", (0, cors_1.default)(), // Enable CORS
+    body_parser_1.default.json(), // Parse JSON requests
+    //@ts-ignore
+    (0, express4_1.expressMiddleware)(server, {
+        context: async () => {
+            const { cache } = server;
+            return {
+                dataSources: {
+                    goalAPI: new goal_1.GoalAPI({ cache }),
+                },
+            };
+        },
+    }));
+    // app.use(express.json());
+    // Define other Express routes
+    app.use("/match", match_1.default);
+    app.use("/live-score", live_score_1.default);
+    app.use("/player", player_1.default);
+    app.use("/team", team_1.default);
+    app.use("/news", news_1.default);
+    // Start the Express server
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+        console.log(`GraphQL endpoint is available at http://localhost:${PORT}/graphql`);
     });
-    console.log(`🚀  Server ready at1: ${url}`);
 };
 runServer();

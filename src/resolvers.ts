@@ -1,42 +1,64 @@
-const books = [
-    {
-      title: "The Awakening",
-      author: "Kate Chopin",
+export const resolvers = {
+  Query: {
+    liveScore: async (_: any, { date }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getLiveScore(date);
+      return data.data.liveScores;
     },
-    {
-      title: "City of Glass",
-      author: "Paul Auster",
+    match: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getMatch(id);
+      return data.data;
     },
-  ];
-  // Resolvers define how to fetch the types defined in your schema.
-  // This resolver retrieves books from the "books" array above.
-  export const resolvers = {
-    Query: {
-      matches: async () => {
-        const res = await fetch(
-          "https://www.fotmob.com/api/matches?date=20241128&timezone=Asia%2FTehran&ccode3=ALB",
-          {
-            headers: {
-              "sec-ch-ua":
-                '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-              "sec-ch-ua-mobile": "?0",
-              "sec-ch-ua-platform": '"Windows"',
-              "x-mas":
-                "eyJib2R5Ijp7InVybCI6Ii9hcGkvbWF0Y2hlcz9kYXRlPTIwMjQxMTI4JnRpbWV6b25lPUFzaWElMkZUZWhyYW4mY2NvZGUzPUFMQiIsImNvZGUiOjE3MzI3ODI5OTU5MzMsImZvbyI6IjNjM2FlNTc1MyJ9LCJzaWduYXR1cmUiOiJEQUNFNDg5NERDMzZCMkE5NDQyRkVBNEM5Q0Y0NTMwMSJ9",
-            },
-            referrer: "https://www.fotmob.com/en-GB",
-            referrerPolicy: "strict-origin-when-cross-origin",
-            body: null,
-            method: "GET",
-            mode: "cors",
-            credentials: "omit",
-          }
-        );
-        const data = await res.json();
-        console.log(data.leagues[0].matches[0]);
-  
-        return data.leagues;
-      },
+    news: async (_: any, __: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getNews();
+      return data;
     },
-  };
-  
+    newsItem: async (_: any, { id }: any, { dataSources }: any) => {
+      // console.log("Starting...");
+
+      const data = await dataSources.goalAPI.getNewsItem(id);
+      console.log("NewsItem:", data);
+
+      return data;
+    },
+    teamSquad: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getTeamSquad(id);
+
+      return data.data;
+    },
+    teamNews: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getTeamNews(id);
+
+      return data.data;
+    },
+    teamMatches: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getTeamMatches(id);
+
+      return data.data;
+    },
+    teamStandings: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getTeamStandings(id);
+
+      return data.data;
+    },
+    team: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getTeam(id);
+
+      return data.data;
+    },
+    player: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getPlayer(id);
+      console.log(data);
+      return data.data;
+    },
+    playerNews: async (_: any, { id }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getPlayerNews(id);
+
+      return data.data;
+    },
+    liveScoreLives: async (_: any, { date }: any, { dataSources }: any) => {
+      const data = await dataSources.goalAPI.getLiveScore(date);
+
+      return data.filter((m: any) => m.status.type == "inprogress");
+    },
+  },
+};

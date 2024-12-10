@@ -1,0 +1,68 @@
+type Query {
+  player(id: String!): PlayerDetails
+  playerNews(id: String!): News
+}
+
+type PlayerDetails {
+  id: ID!
+  shirtNumber: Int
+  firstName: String
+  lastName: String
+  name: String
+  position: String
+  age: Int
+  dateOfBirth: DateTime
+  nationality: Nationality
+  image: Image
+  team: Team
+  stats: [PlayerStats]
+}
+
+type Nationality {
+  name: String
+  image: Image
+}
+
+type PlayerStats {
+  competition: Competition
+  season: Season
+  team: PlayerStatTeam
+  stats: StatItems
+}
+
+type PlayerStatTeam {
+    id: ID!
+    image: Image
+}
+
+type StatItems {
+  appearances: Int
+  startingEleven: Int
+  minutesPlayed: Int
+  goals: Int
+  minutesPerGoal: Int
+  assists: Int
+  ownGoals: Int
+  penaltyGoals: Int
+  penaltiesMissed: Int
+  shotsOnTarget: Int
+  shotsOffTarget: Int
+  blockedShots: Int
+  goalsOutsideBox: Int
+  hitWoodwork: Int
+  freekickGoals: Int
+  offsides: Int
+  corners: Int
+  crosses: Int
+  successfulCrosses: Int
+  tackles: Int
+  clearances: Int
+  yellowCards: Int
+  redCards: Int
+  foulsCommited: Int
+  foulsSuffered: Int
+  goalsConceded: Int
+  cleanSheets: Int
+  saves: Int
+  penaltySaves: Int
+}

@@ -1,0 +1,19 @@
+query News {
+  news {
+    cards {
+      image {
+        image {
+          src
+        }
+      }
+      title
+      teaser
+      tags {
+        tags {
+          name
+          url
+        }
+      }
+    }
+  }
+}

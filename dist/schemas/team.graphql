@@ -1,0 +1,96 @@
+type Query {
+  teamSquad(id: String!): TeamSquad
+  teamNews(id: String!): News
+  teamMatches(id: String!): [Match]
+  teamStandings(id: String!): [Standings]
+  team(id: String!): Team
+}
+
+type TeamSquad {
+  coach: Coach
+  players: [PlayerContainer]
+}
+
+type SquadImage {
+  width: Int
+  height: Int
+  url: String
+  alt: String
+}
+
+type Coach {
+  id: String
+  name: String
+  image: SquadImage
+}
+
+type PlayerStatsInSquad {
+  appearances: Int
+  assists: Int
+  goals: Int
+  redCards: Int
+  yellowCards: Int
+}
+
+type PlayerContainer {
+  player: Player
+  stats: PlayerStatsInSquad
+  onLoan: Boolean
+}
+
+type Player {
+  id: ID!
+  name: String
+  position: String
+  shirtNumber: Int
+  image: SquadImage
+}
+
+type Standings {
+  table: Table
+  markers: [Marker]
+  competition: Competition
+}
+
+type Marker {
+  name: String
+  id: ID!
+  type: String
+}
+
+type Table {
+  rankings: [Rankings]
+  name: String
+  live: Boolean
+}
+
+type Rankings {
+  position: Int
+  played: Int
+  win: Int
+  draw: Int
+  lose: Int
+  goalsFor: Int
+  goalsAgainst: Int
+  goalsDifference: Int
+  points: Int
+  team: MatchTeam
+  form: [Form]
+}
+
+type Form {
+    wdl: String
+    match: FormMatch
+}
+
+type FormMatch {
+    id: String
+    status: String
+    teamA: FormTeam
+    teamB: FormTeam
+    score: RedCards
+}
+
+type FormTeam {
+    id: ID!
+}

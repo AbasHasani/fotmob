@@ -1,0 +1,237 @@
+type Query {
+  match(id: String): MatchInfo
+}
+
+type MatchInfo {
+  id: ID
+  status: String
+  competition: Competition
+  startDate: DateTime
+  period: String
+  score: FullTime
+  agg: String
+  penalty: String
+  venue: Venue
+  halfTime: FullTime
+  fullTime: FullTime
+  extraTime: String
+  scorers: Scorers
+  teamA: MatchTeam
+  teamB: MatchTeam
+  round: Round
+  referee: [String]
+  events: [DataEvent]
+  keyEvents: [String]
+  stats: MatchStats
+  season: Season
+  form: Form
+  lineups: Lineups
+}
+
+type Area {
+  id: ID
+  name: String
+  code: String
+}
+
+type DataEvent {
+  type: String
+  side: Side
+  period: Period
+  player: Person
+  reason: String
+  in: Person
+  out: Person
+  scorer: Person
+  assist: Person
+  score: FullTime
+}
+
+enum Typename {
+  MATCH_CARD_EVENT
+  MATCH_GOAL_EVENT
+  MATCH_PERIOD_EVENT
+  MATCH_SUBSTITUTION_EVENT
+}
+
+type Person {
+  id: ID
+  name: String
+  image: PersonImage
+  verified: Boolean
+}
+
+type PersonImage {
+  url: String
+  alt: String
+}
+
+type Period {
+  minute: Int
+  extra: Int
+}
+
+type FullTime {
+  teamA: Int
+  teamB: Int
+}
+
+enum Side {
+  TEAM_A
+  TEAM_B
+}
+
+type Form {
+  allTeamA: TeamStats
+  allTeamB: TeamStats
+  homeTeamA: TeamStats
+  homeTeamB: TeamStats
+}
+
+type TeamStats {
+  stats: Stats
+  matches: [MatchElement]
+}
+
+type MatchElement {
+  wdl: WDL
+  match: MatchDetails
+}
+
+type MatchDetails {
+  id: ID
+  startDate: DateTime
+  teamA: MatchTeam
+  teamB: MatchTeam
+  score: FullTime
+}
+
+type MatchTeam {
+  id: ID
+  code: String
+  name: String
+  long: String
+  image: PersonImage
+}
+
+enum WDL {
+  DRAW
+  LOSE
+  WIN
+}
+
+type Stats {
+  goalsScored: Int
+  goalsConceded: Int
+  gamesOverTwoAndHalfGoals: Int
+  gamesTotal: Int
+  gamesBothTeamsScored: Int
+}
+
+type Lineups {
+  teamA: Team
+  teamB: Team
+  confirmed: Boolean
+}
+
+type Team {
+  formation: String
+  lineup: [LineupPlayer]
+  substitutes: [Substitute]
+  manager: Manager
+  injuries: [Injury]
+  suspensions: [String]
+  kit: String
+}
+
+type Injury {
+  person: Person
+  shirtNumber: Int
+  description: String
+  endDate: DateTime
+}
+
+type LineupPlayer {
+  person: Person
+  shirtNumber: Int
+  pitchPosition: PitchPosition
+  events: [DataEvent]
+  score: Int
+  isCaptain: Boolean
+}
+
+type PitchPosition {
+  x: Float
+  y: Float
+}
+
+type Manager {
+  id: ID
+  name: String
+  image: ManagerImage
+}
+
+type ManagerImage {
+  url: String
+}
+
+type Substitute {
+  person: Person
+  shirtNumber: Int
+  events: [DataEvent]
+  score: Int
+}
+
+type Round {
+  name: String
+  id: ID
+  display: Boolean
+}
+
+type Scorers {
+  teamA: [ScorerInfo]
+  teamB: [ScorerInfo]
+}
+
+type ScorerInfo {
+  player: Player
+  events: [ScorerEvent]
+}
+
+type ScorerEvent {
+  type: String
+  period: Period
+}
+
+type Player {
+  id: ID
+  name: String
+}
+
+type StatItem {
+  type: String
+  teamA: Int
+  teamB: Int
+}
+
+type MatchStats {
+  summary: [StatItem]
+  attacking: [StatItem]
+  passing: [StatItem]
+  duels: [StatItem]
+  defence: [StatItem]
+  discipline: [StatItem]
+}
+
+type Season {
+  id: String
+  name: String
+  active: Boolean
+}
+
+type Venue {
+  name: String
+}
+
+# Custom scalar for DateTime
+scalar DateTime

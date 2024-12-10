@@ -1,0 +1,141 @@
+type Query {
+  news: News
+  newsItem(id: String!): SingleNews
+}
+
+type SingleNews {
+  slideList: SlideList
+  mostRead: MostRead
+  editorsPicks: MostRead
+}
+
+type MostRead {
+  headline: String
+  cards: [MostReadCard]
+}
+
+type MostReadCard {
+  headline: String
+  link: Link
+}
+
+type Author {
+  id: ID!
+  name: String
+}
+
+type Settings {
+  commentsAllowed: Boolean
+  includeInFeeds: Boolean
+  enableEditorsPicks: Boolean
+}
+
+type Article {
+  id: ID!
+  headline: String
+  title: String
+  disclaimer: Boolean
+  teaser: String
+  settings: Settings
+  publishTime: String
+  poster: Poster
+  tagList: Tags
+  author: [Author]
+  commentId: String
+  body: SingleNewsBody
+}
+type Poster {
+  image: MediaImage
+}
+type SingleNewsBody {
+  body: String
+  embeds: Embeds
+}
+
+type Embeds {
+  teamIds: [String]
+}
+
+type SingleNewsSlideBody {
+  body: String
+  id: ID
+}
+
+type MediaImage {
+  src: String
+  width: Int
+  height: Int
+  alt: String
+  sizes: String
+}
+
+type Media {
+  type: String
+  credit: String
+  source: String
+  image: MediaImage
+}
+
+type Slide {
+  headline: String
+  id: String
+  media: Media
+  body: SingleNewsSlideBody
+}
+
+type SlideList {
+  type: String
+  matches: [Match]
+  article: Article
+  slides: [Slide]
+}
+
+type News {
+  cards: [NewsItem]
+}
+
+type NewsItem {
+  tags: Tags
+  publishTime: String
+  teaser: String
+  commentCount: CommentCount
+  title: String
+  image: NewsImageContainer
+  newsTab: Boolean
+  url: String
+}
+
+type NewsImage {
+  src: String
+  width: Int
+  height: Int
+  alt: String
+  srcSet: [Int]
+}
+
+type NewsImageContainer {
+  image: NewsImage
+}
+
+type CommentCount {
+  hideIfNoComments: Boolean
+  threadId: String
+  postId: String
+}
+
+type Tags {
+  tags: [Tag]
+}
+
+type Tag {
+  name: String
+  pageType: String
+  url: String
+  link: Link
+}
+
+type Link {
+  id: ID!
+  slug: String
+  pageType: String
+}
