@@ -5,7 +5,7 @@ const datasource_rest_1 = require("@apollo/datasource-rest");
 class GoalAPI extends datasource_rest_1.RESTDataSource {
     constructor() {
         super(...arguments);
-        this.baseURL = "http://localhost:4000/";
+        this.baseURL = "https://fotmob-uvwm.onrender.com/";
     }
     async getLiveScore(date) {
         return this.get(`live-score/${date}`);
