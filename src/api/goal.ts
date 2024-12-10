@@ -1,7 +1,7 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
 
 export class GoalAPI extends RESTDataSource {
-  override baseURL = "http://localhost:4000/";
+  override baseURL = "https://fotmob-uvwm.onrender.com/";
 
   async getLiveScore(date: string): Promise<any> {
     return this.get<any>(`live-score/${date}`);
