@@ -7,7 +7,7 @@ type MatchInfo {
   status: String
   competition: Competition
   startDate: DateTime
-  period: String
+  period: Period
   score: FullTime
   agg: String
   penalty: String
