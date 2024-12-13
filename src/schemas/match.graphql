@@ -1,5 +1,5 @@
 type Query {
-  match(id: String): MatchInfo
+  match(id: String!): MatchInfo
 }
 
 type MatchInfo {
@@ -210,8 +210,8 @@ type Player {
 
 type StatItem {
   type: String
-  teamA: Int
-  teamB: Int
+  teamA: Float
+  teamB: Float
 }
 
 type MatchStats {
