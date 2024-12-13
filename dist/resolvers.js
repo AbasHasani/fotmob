@@ -5,7 +5,7 @@ exports.resolvers = {
     Query: {
         liveScore: async (_, { date }, { dataSources }) => {
             const data = await dataSources.goalAPI.getField("live-score", date);
-            return data.liveScores;
+            return data;
         },
         match: async (_, { id }, { dataSources }) => {
             const data = await dataSources.goalAPI.getField(id);
