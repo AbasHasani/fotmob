@@ -8,7 +8,7 @@ exports.resolvers = {
             return data;
         },
         match: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getField(id);
+            const data = await dataSources.goalAPI.getField("match", id);
             return data;
         },
         news: async (_, __, { dataSources }) => {

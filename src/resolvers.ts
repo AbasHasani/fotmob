@@ -5,7 +5,7 @@ export const resolvers = {
       return data;
     },
     match: async (_: any, { id }: any, { dataSources }: any) => {
-      const data = await dataSources.goalAPI.getField(id);
+      const data = await dataSources.goalAPI.getField("match",id);
       return data;
     },
     news: async (_: any, __: any, { dataSources }: any) => {
