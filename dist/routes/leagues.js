@@ -47,4 +47,15 @@ router.get("/:id", async (req, res) => {
         res.send("Erro again");
     }
 });
+router.get("/competition/:id", async (req, res) => {
+    const url = `https://www.goal.com/en-us/premier-league/${req.params.id}`;
+    try {
+        const data = await (0, extractor_1.extract)(url, ["competition"]);
+        res.json(data);
+    }
+    catch (error) {
+        console.log(error);
+        res.send("Erro again");
+    }
+});
 exports.default = router;

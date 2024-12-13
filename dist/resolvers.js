@@ -70,5 +70,9 @@ exports.resolvers = {
             const data = await dataSources.goalAPI.getField("league/top-players", id);
             return data;
         },
+        leagueCompetition: async (_, { id }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league/competition", id);
+            return data;
+        },
     },
 };

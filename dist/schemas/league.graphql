@@ -3,6 +3,7 @@ type Query {
     leagueMatches(id: String!): [LeagueRoundMatches]
     leagueStandings(id: String!): LeagueStandings
     leagueTopPlayers(id: String!): LeagueTopPlayers
+    leagueCompetition(id: String!): Competition
 }
 
 type LeagueRoundMatches {
