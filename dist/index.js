@@ -18,6 +18,7 @@ const live_score_1 = __importDefault(require("./routes/live-score"));
 const team_1 = __importDefault(require("./routes/team"));
 const player_1 = __importDefault(require("./routes/player"));
 const news_1 = __importDefault(require("./routes/news"));
+const leagues_1 = __importDefault(require("./routes/leagues"));
 const goal_1 = require("./api/goal");
 const server = new server_1.ApolloServer({
     typeDefs: schemas_1.typeDefs,
@@ -59,6 +60,7 @@ const runServer = async () => {
     app.use("/player", player_1.default);
     app.use("/team", team_1.default);
     app.use("/news", news_1.default);
+    app.use("/league", leagues_1.default);
     // Start the Express server
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {

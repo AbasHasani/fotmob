@@ -4,55 +4,71 @@ exports.resolvers = void 0;
 exports.resolvers = {
     Query: {
         liveScore: async (_, { date }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getLiveScore(date);
-            return data.data.liveScores;
+            const data = await dataSources.goalAPI.getField("live-score", date);
+            return data.liveScores;
         },
         match: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getMatch(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField(id);
+            return data;
         },
         news: async (_, __, { dataSources }) => {
-            const data = await dataSources.goalAPI.getNews();
+            const data = await dataSources.goalAPI.getNews("news");
             return data;
         },
         newsItem: async (_, { id }, { dataSources }) => {
             // console.log("Starting...");
-            const data = await dataSources.goalAPI.getNewsItem(id);
+            const data = await dataSources.goalAPI.getField("news", id);
             console.log("NewsItem:", data);
             return data;
         },
         teamSquad: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getTeamSquad(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("team/squad", id);
+            return data;
         },
         teamNews: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getTeamNews(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("team/news", id);
+            return data;
         },
         teamMatches: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getTeamMatches(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("team/matches", id);
+            return data;
         },
         teamStandings: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getTeamStandings(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("team/standings", id);
+            return data;
         },
         team: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getTeam(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("team", id);
+            return data;
         },
         player: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getPlayer(id);
+            const data = await dataSources.goalAPI.getField("player", id);
             console.log(data);
-            return data.data;
+            return data;
         },
         playerNews: async (_, { id }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getPlayerNews(id);
-            return data.data;
+            const data = await dataSources.goalAPI.getField("player/news", id);
+            return data;
         },
         liveScoreLives: async (_, { date }, { dataSources }) => {
-            const data = await dataSources.goalAPI.getLiveScore(date);
+            const data = await dataSources.goalAPI.getField(date);
             return data.filter((m) => m.status.type == "inprogress");
+        },
+        leagueNews: async (_, { id }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league", id);
+            return data;
+        },
+        leagueMatches: async (_, { id }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league/matches", id);
+            return data;
+        },
+        leagueStandings: async (_, { id }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league/standings", id);
+            return data;
+        },
+        leagueTopPlayers: async (_, { id }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league/top-players", id);
+            return data;
         },
     },
 };

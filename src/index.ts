@@ -13,6 +13,7 @@ import liveScore from "./routes/live-score";
 import team from "./routes/team";
 import player from "./routes/player";
 import news from "./routes/news";
+import league from "./routes/leagues";
 
 import { GoalAPI } from "./api/goal";
 
@@ -61,6 +62,7 @@ const runServer = async () => {
   app.use("/player", player);
   app.use("/team", team);
   app.use("/news", news);
+  app.use("/league", league);
   // Start the Express server
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => {

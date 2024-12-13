@@ -1,14 +1,12 @@
 import { Router } from "express";
-import * as cheerio from "cheerio";
-import { newsItem } from "../../types/team";
-import { extractNewsItem } from "./newsItem";
-import { extractNews } from "../team/news";
+import { extract } from "./lib/extractor";
+
 const router = Router();
 
 router.get("/", async (req: any, res) => {
   const url = `https://www.goal.com/en/news`;
   try {
-    const news = await extractNews(url);
+    const news = await extract(url, ["newsArchive", "news"]);
     res.json(news);
   } catch (error) {
     console.log(error);
@@ -19,10 +17,8 @@ router.get("/", async (req: any, res) => {
 router.get("/:id", async (req: any, res) => {
   const url = `https://www.goal.com/en/lists/title/${req.params.id}`;
   try {
-    const news = await extractNewsItem(url);
-    console.log({...req.params.id})
-    // console.log("News from news/index.ts", news);
-
+    const news = await extract(url);
+    console.log({ ...req.params.id });
     res.json(news);
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 
-export const extractNewsItem = async (url: string) => {
+export const extract = async (url: string, field?: string[]) => {
   const res = await fetch(url);
   const html = await res.text();
   const $ = cheerio.load(html);
@@ -9,6 +9,13 @@ export const extractNewsItem = async (url: string) => {
   const jsonData = JSON.parse(jsonScript);
 
   if (jsonData) {
+    if (field) {
+      let nested: any = jsonData.props.pageProps.content;
+      field.forEach((f) => {
+        nested = nested[f];
+      });
+      return nested;
+    }
     return jsonData.props.pageProps.content;
   } else {
     console.log("No news data found.");

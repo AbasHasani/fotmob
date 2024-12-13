@@ -1,0 +1,41 @@
+type Query {
+    leagueNews(id: String!): News
+    leagueMatches(id: String!): [LeagueRoundMatches]
+    leagueStandings(id: String!): LeagueStandings
+    leagueTopPlayers(id: String!): LeagueTopPlayers
+}
+
+type LeagueRoundMatches {
+    name: String
+    active: Boolean
+    gameSetTypeId: ID
+    matches: [Match]
+}
+
+type LeagueStandings {
+    tables: [Table]
+    markers: [Marker]
+}
+
+type LeagueTopPlayers {
+    goals: [TopPlayer],
+    assists: [TopPlayer],
+    redCards: [TopPlayer],
+    yellowCards: [TopPlayer],
+    shotsOnTarget: [TopPlayer],
+    foulsCommitted: [TopPlayer],
+    foulsWon: [TopPlayer],
+    tackles: [TopPlayer],
+    offsides: [TopPlayer]
+}
+
+type TopPlayer {
+    player: TopPlayerPerson
+    team: Team
+    value: Int
+}
+
+type TopPlayerPerson {
+    id: ID
+    name: String
+}
