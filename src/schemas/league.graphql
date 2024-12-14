@@ -4,6 +4,7 @@ type Query {
     leagueStandings(id: String!): LeagueStandings
     leagueTopPlayers(id: String!): LeagueTopPlayers
     leagueCompetition(id: String!): Competition
+    leagueRound(id: String!, round: String!): LeagueRound
 }
 
 type LeagueRoundMatches {
@@ -39,4 +40,10 @@ type TopPlayer {
 type TopPlayerPerson {
     id: ID
     name: String
+}
+
+type LeagueRound {
+    name: String
+    active: Boolean
+    matches: [Match]
 }

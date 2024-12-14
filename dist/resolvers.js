@@ -74,5 +74,9 @@ exports.resolvers = {
             const data = await dataSources.goalAPI.getField("league/competition", id);
             return data;
         },
+        leagueRound: async (_, { id, round }, { dataSources }) => {
+            const data = await dataSources.goalAPI.getField("league/round", `${id}/${round}`);
+            return data;
+        },
     },
 };

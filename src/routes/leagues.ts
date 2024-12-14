@@ -57,4 +57,16 @@ router.get("/competition/:id", async (req: any, res) => {
   }
 });
 
+router.get("/round/:leagueId/:roundId", async (req: any, res) => {
+  const url = `https://www.goal.com/api/competition-matches?edition=en&id=${req.params.leagueId}&country=US&gameSetTypeIds=${req.params.roundId}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    res.json(data.gamesets[0]);
+  } catch (error) {
+    console.log(error);
+    res.send("Erro again");
+  }
+});
+
 export default router;
