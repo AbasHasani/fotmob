@@ -5,8 +5,7 @@ const datasource_rest_1 = require("@apollo/datasource-rest");
 class GoalAPI extends datasource_rest_1.RESTDataSource {
     constructor() {
         super(...arguments);
-        // override baseURL = "https://fotmob-uvwm.onrender.com/";
-        this.baseURL = "http://localhost:4000/";
+        this.baseURL = "https://fotmob-uvwm.onrender.com/";
         // async getNewsItem(id: string): Promise<any[]> {
         //   const data = await this.get(`news/${id}`);
         //   return data;
@@ -20,6 +19,7 @@ class GoalAPI extends datasource_rest_1.RESTDataSource {
         //   return data;
         // }
     }
+    // override baseURL = "http://localhost:4000/";
     async getField(field, param) {
         const data = await this.get(`${field}/${param}`);
         return data;
