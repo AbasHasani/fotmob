@@ -17,8 +17,8 @@ router.get("/:id", async (req, res) => {
 router.get("/news/:id", async (req, res) => {
     const url = `https://www.goal.com/en/player/PlayerName/news/${req.params.id}`;
     try {
-        const data = await (0, extractor_1.extract)(url);
-        res.json({ data });
+        const data = await (0, extractor_1.extract)(url, ["newsArchive", "news"]);
+        res.json(data);
     }
     catch (error) {
         console.log(error);
