@@ -60,7 +60,7 @@ exports.resolvers = {
         },
         leagueMatches: async (_, { id }, { dataSources }) => {
             const data = await dataSources.goalAPI.getField("league/matches", id);
-            return data;
+            return { leagueRoundMatches: data };
         },
         leagueStandings: async (_, { id }, { dataSources }) => {
             const data = await dataSources.goalAPI.getField("league/standings", id);
@@ -77,6 +77,16 @@ exports.resolvers = {
         leagueRound: async (_, { id, round }, { dataSources }) => {
             const data = await dataSources.goalAPI.getField("league/round", `${id}/${round}`);
             return data;
+        },
+    },
+    LeagueMatches: {
+        leagueRound: async (parent, { id, round }, { dataSources }, info) => {
+            const requestedFields = info.fieldNodes.find((node) => node.name.value === "leagueRound");
+            if (requestedFields) {
+                const data = await dataSources.goalAPI.getField("league/round", `${id}/${round}`);
+                return data;
+            }
+            return null;
         },
     },
 };

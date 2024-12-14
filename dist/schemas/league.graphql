@@ -1,9 +1,14 @@
 type Query {
     leagueNews(id: String!): News
-    leagueMatches(id: String!): [LeagueRoundMatches]
+    leagueMatches(id: String!): LeagueMatches
     leagueStandings(id: String!): LeagueStandings
     leagueTopPlayers(id: String!): LeagueTopPlayers
     leagueCompetition(id: String!): Competition
+    leagueRound(id: String!, round: String!): LeagueRound
+}
+
+type LeagueMatches {
+    leagueRoundMatches: [LeagueRoundMatches]
     leagueRound(id: String!, round: String!): LeagueRound
 }
 

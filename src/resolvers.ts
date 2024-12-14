@@ -27,7 +27,6 @@ export const resolvers = {
     },
     teamNews: async (_: any, { id }: any, { dataSources }: any) => {
       const data = await dataSources.goalAPI.getField("team/news", id);
-
       return data;
     },
     teamMatches: async (_: any, { id }: any, { dataSources }: any) => {
@@ -66,7 +65,7 @@ export const resolvers = {
     },
     leagueMatches: async (_: any, { id }: any, { dataSources }: any) => {
       const data = await dataSources.goalAPI.getField("league/matches", id);
-      return data;
+      return { leagueRoundMatches: data };
     },
     leagueStandings: async (_: any, { id }: any, { dataSources }: any) => {
       const data = await dataSources.goalAPI.getField("league/standings", id);
@@ -86,6 +85,28 @@ export const resolvers = {
         `${id}/${round}`
       );
       return data;
+    },
+  },
+  LeagueMatches: {
+    leagueRound: async (
+      parent,
+      { id, round }: any,
+      { dataSources }: any,
+      info
+    ) => {
+      const requestedFields = info.fieldNodes.find(
+        (node) => node.name.value === "leagueRound"
+      );
+
+      if (requestedFields) {
+        const data = await dataSources.goalAPI.getField(
+          "league/round",
+          `${id}/${round}`
+        );
+
+        return data;
+      }
+      return null;
     },
   },
 };
